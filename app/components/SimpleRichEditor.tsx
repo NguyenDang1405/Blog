@@ -169,19 +169,18 @@ export default function SimpleRichEditor({ value, onChange, placeholder }: Simpl
 
       {/* Editor */}
       <div className="relative">
-        {isPreview ? (
+        <textarea
+          id="rich-editor"
+          value={value}
+          onChange={handleTextChange}
+          placeholder={placeholder || "Viết nội dung bài viết của bạn... Bạn có thể sử dụng các công cụ định dạng để tạo nội dung phong phú."}
+          className={`w-full p-4 min-h-[500px] border-0 resize-none focus:outline-none font-mono text-sm ${isPreview ? 'hidden' : 'block'}`}
+          style={{ fontFamily: 'inherit' }}
+        />
+        {isPreview && (
           <div 
             className="p-4 min-h-[500px] prose max-w-none"
             dangerouslySetInnerHTML={{ __html: renderPreview(value) }}
-          />
-        ) : (
-          <textarea
-            id="rich-editor"
-            value={value}
-            onChange={handleTextChange}
-            placeholder={placeholder || "Viết nội dung bài viết của bạn... Bạn có thể sử dụng các công cụ định dạng để tạo nội dung phong phú."}
-            className="w-full p-4 min-h-[500px] border-0 resize-none focus:outline-none font-mono text-sm"
-            style={{ fontFamily: 'inherit' }}
           />
         )}
       </div>
