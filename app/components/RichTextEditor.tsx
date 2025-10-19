@@ -15,24 +15,24 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
       <Editor
-        apiKey="qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2"
+        // Không sử dụng API key để tránh lỗi domain
         onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}
         init={{
           height: 500,
-          menubar: true,
+          menubar: false,
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
             'insertdatetime', 'media', 'table', 'help', 'wordcount'
           ],
-          toolbar: 'undo redo | blocks fontfamily fontsize | ' +
+          toolbar: 'undo redo | blocks | ' +
             'bold italic underline strikethrough | alignleft aligncenter ' +
             'alignright alignjustify | outdent indent |  numlist bullist | ' +
-            'forecolor backcolor removeformat | pagebreak | charmap emoticons | ' +
-            'fullscreen preview save print | insertfile image media template link anchor codesample | ' +
-            'ltr rtl | showcomments addcomment',
+            'forecolor backcolor removeformat | charmap | ' +
+            'fullscreen preview | insertfile image media link anchor | ' +
+            'ltr rtl',
           font_family_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
           font_size_formats: '8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt',
           content_style: `
