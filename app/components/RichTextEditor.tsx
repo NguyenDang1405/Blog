@@ -135,7 +135,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               input.click()
             }
           },
-          setup: (editor) => {
+          setup: (editor: any) => {
             editor.on('change', () => {
               onChange(editor.getContent())
             })
