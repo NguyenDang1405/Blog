@@ -101,7 +101,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           images_upload_base_path: '/uploads',
           images_upload_credentials: true,
           file_picker_types: 'image',
-          file_picker_callback: (callback, value, meta) => {
+          file_picker_callback: (callback: any, value: any, meta: any) => {
             if (meta.filetype === 'image') {
               const input = document.createElement('input')
               input.setAttribute('type', 'file')
