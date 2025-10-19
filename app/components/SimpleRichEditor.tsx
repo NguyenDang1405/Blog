@@ -188,7 +188,7 @@ export default function SimpleRichEditor({ value, onChange, placeholder }: Simpl
 
       {/* Help text */}
       <div className="bg-gray-50 border-t border-gray-200 p-2 text-xs text-gray-600">
-        <strong>Markdown shortcuts:</strong> **bold**, *italic*, `code`, # heading, > quote, - list, [link](url), ![image](url)
+        <strong>Markdown shortcuts:</strong> **bold**, *italic*, `code`, # heading, &gt; quote, - list, [link](url), ![image](url)
       </div>
     </div>
   )
