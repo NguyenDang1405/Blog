@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as categories from "../categories.js";
 import type * as client from "../client.js";
 import type * as posts from "../posts.js";
 
@@ -26,6 +27,7 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  categories: typeof categories;
   client: typeof client;
   posts: typeof posts;
 }>;
