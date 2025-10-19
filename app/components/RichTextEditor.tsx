@@ -25,9 +25,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons',
-            'template', 'codesample', 'hr', 'pagebreak', 'nonbreaking', 'toc',
-            'imagetools', 'textpattern', 'noneditable', 'quickbars', 'accordion'
+            'insertdatetime', 'media', 'table', 'help', 'wordcount'
           ],
           toolbar: 'undo redo | blocks fontfamily fontsize | ' +
             'bold italic underline strikethrough | alignleft aligncenter ' +
@@ -97,7 +95,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           statusbar: true,
           resize: 'both',
           image_advtab: true,
-          images_upload_url: '/api/cloudinary-upload',
+          images_upload_url: '/api/upload',
           images_upload_base_path: '/uploads',
           images_upload_credentials: true,
           file_picker_types: 'image',
@@ -114,7 +112,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
                   formData.append('file', file)
                   
                          try {
-                           const response = await fetch('/api/cloudinary-upload', {
+                           const response = await fetch('/api/upload', {
                              method: 'POST',
                              body: formData
                            })

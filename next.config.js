@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // App Router is stable in Next.js 14, no experimental config needed
+  experimental: {
+    serverComponentsExternalPackages: ['cloudinary']
+  },
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+    };
+    return config;
+  },
 }
 
 module.exports = nextConfig
