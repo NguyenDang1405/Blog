@@ -1,77 +1,105 @@
-# Blog App - Ứng dụng Blog hiện đại
+# 📝 Blog App - Ứng dụng Blog hiện đại
 
-Một ứng dụng blog được xây dựng với Next.js 14, Convex, Cloudinary và Tailwind CSS. Hỗ trợ upload ảnh, rich text editor và quản lý nội dung blog chuyên nghiệp.
+> Một ứng dụng blog được xây dựng với Next.js 14, Convex, Cloudinary và Tailwind CSS.  
+> Hỗ trợ upload ảnh, rich text editor và quản lý nội dung blog chuyên nghiệp.
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![Convex](https://img.shields.io/badge/Convex-Database-orange?style=flat)](https://convex.dev/)
+[![Cloudinary](https://img.shields.io/badge/Cloudinary-CDN-3448C5?style=flat)](https://cloudinary.com/)
+
+---
 
 ## 🚀 Tính năng chính
 
-### ✨ Tính năng cốt lõi:
-1. **Tạo bài viết mới** - Rich text editor với TinyMCE
-2. **Upload ảnh** - Tích hợp Cloudinary cho lưu trữ ảnh
-3. **Quản lý bài viết** - Xem, chỉnh sửa, xóa bài viết
-4. **Tìm kiếm** - Tìm kiếm bài viết theo tiêu đề và nội dung
-5. **Phân loại** - Hệ thống category và tags
+<table>
+<tr>
+<td width="33%">
 
-### 🎨 Tính năng giao diện:
-- **Responsive Design** - Tối ưu cho mọi thiết bị
-- **Modern UI** - Giao diện đẹp với Tailwind CSS
-- **Dark/Light Mode** - Hỗ trợ chế độ sáng/tối
-- **SEO Optimized** - Tối ưu cho công cụ tìm kiếm
+### ✨ Tính năng cốt lõi
+- 📝 **Tạo bài viết mới** - Rich text editor với TinyMCE
+- 🖼️ **Upload ảnh** - Tích hợp Cloudinary cho lưu trữ ảnh
+- 📋 **Quản lý bài viết** - Xem, chỉnh sửa, xóa bài viết
+- 🔍 **Tìm kiếm** - Tìm kiếm bài viết theo tiêu đề và nội dung
+- 🏷️ **Phân loại** - Hệ thống category và tags
 
-### 🔧 Tính năng kỹ thuật:
-- **Real-time Database** - Convex cho đồng bộ thời gian thực
-- **Image Upload** - Cloudinary CDN cho hiệu suất cao
-- **TypeScript** - Type safety và developer experience tốt
-- **App Router** - Next.js 14 App Router mới nhất
+</td>
+<td width="33%">
+
+### 🎨 Tính năng giao diện
+- 📱 **Responsive Design** - Tối ưu cho mọi thiết bị
+- 🎨 **Modern UI** - Giao diện đẹp với Tailwind CSS
+- 🌙 **Dark/Light Mode** - Hỗ trợ chế độ sáng/tối
+- 🔍 **SEO Optimized** - Tối ưu cho công cụ tìm kiếm
+
+</td>
+<td width="33%">
+
+### 🔧 Tính năng kỹ thuật
+- ⚡ **Real-time Database** - Convex cho đồng bộ thời gian thực
+- 🚀 **Image Upload** - Cloudinary CDN cho hiệu suất cao
+- 🛡️ **TypeScript** - Type safety và developer experience tốt
+- 🛣️ **App Router** - Next.js 14 App Router mới nhất
+
+</td>
+</tr>
+</table>
+
+---
 
 ## 🛠️ Công nghệ sử dụng
 
-### Frontend:
-- **Next.js 14** - React framework với App Router
-- **React 18** - UI library với hooks mới nhất
-- **TypeScript** - Type safety và IntelliSense
-- **Tailwind CSS** - Utility-first CSS framework
+<div align="center">
 
-### Backend & Database:
-- **Convex** - Real-time database và backend functions
-- **Cloudinary** - CDN và image management
-- **TinyMCE** - Rich text editor
+| Category | Technology | Description |
+|----------|------------|-------------|
+| **Frontend** | ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js) | React framework với App Router |
+| | ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react) | UI library với hooks mới nhất |
+| | ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat&logo=typescript) | Type safety và IntelliSense |
+| | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=flat&logo=tailwind-css) | Utility-first CSS framework |
+| **Backend** | ![Convex](https://img.shields.io/badge/Convex-Database-orange?style=flat) | Real-time database và backend functions |
+| | ![Cloudinary](https://img.shields.io/badge/Cloudinary-CDN-3448C5?style=flat) | CDN và image management |
+| | ![TinyMCE](https://img.shields.io/badge/TinyMCE-Editor-5A67D8?style=flat) | Rich text editor |
+| **Deploy** | ![Vercel](https://img.shields.io/badge/Vercel-Hosting-000?style=flat&logo=vercel) | Hosting và deployment |
+| | ![Git](https://img.shields.io/badge/Git-Version_Control-F05032?style=flat&logo=git) | Version control |
+| | ![npm](https://img.shields.io/badge/npm-Package_Manager-CB3837?style=flat&logo=npm) | Package management |
 
-### Development & Deployment:
-- **Vercel** - Hosting và deployment
-- **Git** - Version control
-- **npm** - Package management
+</div>
+
+---
 
 ## 📦 Cài đặt
 
-### Yêu cầu hệ thống:
-- Node.js 18+ 
-- npm hoặc yarn
+### 📋 Yêu cầu hệ thống:
+- **Node.js** 18+ 
+- **npm** hoặc **yarn**
 
-### Bước 1: Clone repository
+### 🚀 Quick Start
+
 ```bash
-git clone <repository-url>
+# 1. Clone repository
+git clone https://github.com/NguyenDang1405/Blog.git
 cd Blog
-```
 
-### Bước 2: Cài đặt dependencies
-```bash
+# 2. Cài đặt dependencies
 npm install
-```
 
-### Bước 3: Thiết lập Convex
-```bash
-# Cài đặt Convex CLI
+# 3. Thiết lập Convex
 npm install -g convex
-
-# Đăng nhập
 convex login
-
-# Khởi tạo project
 convex dev
+
+# 4. Tạo file .env.local (xem bên dưới)
+
+# 5. Chạy ứng dụng
+npm run dev
 ```
 
-### Bước 4: Cấu hình environment
-Tạo file `.env.local`:
+### ⚙️ Cấu hình Environment
+
+Tạo file `.env.local` trong thư mục gốc:
+
 ```env
 # Convex Configuration
 NEXT_PUBLIC_CONVEX_URL=your_convex_url_here
@@ -83,28 +111,27 @@ CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
-### Bước 5: Thiết lập Cloudinary (tùy chọn)
-1. Đăng ký tài khoản tại [Cloudinary](https://cloudinary.com/)
-2. Lấy thông tin API từ Dashboard
-3. Cập nhật các giá trị trong `.env.local`
+### 🔧 Thiết lập Cloudinary (tùy chọn)
 
-### Bước 6: Chạy ứng dụng
-```bash
-npm run dev
-```
+1. **Đăng ký tài khoản** tại [Cloudinary](https://cloudinary.com/)
+2. **Lấy thông tin API** từ Dashboard → Settings → Security
+3. **Cập nhật** các giá trị trong `.env.local`
 
-Mở [http://localhost:3000](http://localhost:3000) để xem ứng dụng.
+### 🧪 Test Upload ảnh
 
-### 🧪 Test Upload ảnh:
 Truy cập [http://localhost:3000/test-upload](http://localhost:3000/test-upload) để test tính năng upload ảnh.
 
-## 🚀 Deploy
+---
 
-Xem hướng dẫn chi tiết trong [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+## 🚀 Deploy
 
 ### Deploy nhanh:
 1. **Convex**: `convex deploy`
 2. **Vercel**: `vercel --prod`
+
+Xem hướng dẫn chi tiết trong [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
+
+---
 
 ## 📁 Cấu trúc Project
 
@@ -145,6 +172,8 @@ Blog/
 └── README.md                      # Documentation
 ```
 
+---
+
 ## 🎯 Cách sử dụng
 
 ### ✍️ Tạo bài viết mới:
@@ -167,6 +196,8 @@ Blog/
 3. **Drag & drop**: Kéo thả ảnh vào vùng upload
 4. **Tự động resize**: Ảnh sẽ được tối ưu tự động
 
+---
+
 ## 🔧 Development
 
 ### Scripts có sẵn:
@@ -183,6 +214,8 @@ convex dev           # Chạy Convex development
 convex deploy        # Deploy Convex functions
 convex logs          # Xem logs
 ```
+
+---
 
 ## 🐛 Troubleshooting
 
@@ -212,6 +245,8 @@ convex logs          # Xem logs
    - Đảm bảo `globals.css` được import
    - Restart development server
 
+---
+
 ## 📚 Tài liệu tham khảo
 
 ### Core Technologies:
@@ -229,6 +264,8 @@ convex logs          # Xem logs
 - [Git Documentation](https://git-scm.com/doc) - Version control
 - [npm Documentation](https://docs.npmjs.com/) - Package management
 
+---
+
 ## 📄 License
 
 MIT License - xem file [LICENSE](LICENSE) để biết thêm chi tiết.
@@ -240,6 +277,11 @@ Mọi đóng góp đều được chào đón! Hãy tạo issue hoặc pull requ
 ## 📞 Liên hệ
 
 Nếu có câu hỏi hoặc cần hỗ trợ, hãy tạo issue trên GitHub.
-#   B l o g 
- 
- 
+
+---
+
+<div align="center">
+
+**⭐ Nếu project này hữu ích, hãy cho một star nhé! ⭐**
+
+</div>
