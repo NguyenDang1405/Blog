@@ -35,16 +35,16 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#92B9E3]/10 via-white to-[#FBA2D0]/10">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#92B9E3] via-[#FFC4A4] to-[#FBA2D0]">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
               Blog của tôi
             </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Chia sẻ những suy nghĩ, kinh nghiệm và kiến thức của tôi với cộng đồng
             </p>
             
@@ -107,7 +107,7 @@ export default function Home() {
                     </div>
                   </div>
                 ) : (
-                  <div className="h-48 bg-gradient-to-r from-yellow-400 to-orange-500 relative overflow-hidden">
+                  <div className="h-48 bg-gradient-to-r from-[#92B9E3] to-[#FFC4A4] relative overflow-hidden">
                     <div className="absolute inset-0 bg-black opacity-20"></div>
                     <div className="absolute bottom-4 left-4 text-white">
                       <span className="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
@@ -118,7 +118,7 @@ export default function Home() {
                 )}
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#92B9E3] transition-colors line-clamp-2">
                     {post.title}
                   </h3>
                   <div 
@@ -129,14 +129,14 @@ export default function Home() {
                   {/* Category and Tags */}
                   <div className="flex flex-wrap items-center gap-2 mb-4">
                     {post.category && (
-                      <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
+                      <span className="bg-[#FFC4A4]/20 text-[#FF6B35] px-2 py-1 rounded-full text-xs font-medium">
                         {post.category}
                       </span>
                     )}
                     {post.tags && post.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1">
                         {post.tags.slice(0, 3).map((tag, index) => (
-                          <span key={index} className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs">
+                          <span key={index} className="bg-[#FBA2D0]/20 text-[#C2185B] px-2 py-1 rounded-full text-xs">
                             #{tag}
                           </span>
                         ))}
@@ -222,7 +222,7 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <div className="h-48 bg-gradient-to-r from-blue-400 to-purple-500 relative overflow-hidden">
+                <div className="h-48 bg-gradient-to-r from-[#92B9E3] to-[#FBA2D0] relative overflow-hidden">
                   <div className="absolute inset-0 bg-black opacity-20"></div>
                   <div className="absolute bottom-4 left-4 text-white">
                     <span className="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">

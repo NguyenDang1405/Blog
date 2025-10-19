@@ -34,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = '' }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Tìm kiếm bài viết..."
-            className="w-full px-4 py-3 pl-12 pr-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            className="w-full px-4 py-3 pl-12 pr-4 border-2 border-[#92B9E3]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#92B9E3] focus:border-transparent transition-all duration-200 bg-white/90 backdrop-blur-sm"
           />
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = '' }) => {
             type="submit"
             className="absolute inset-y-0 right-0 pr-4 flex items-center"
           >
-            <svg className="w-5 h-5 text-gray-400 hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-400 hover:text-[#92B9E3] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </button>
@@ -84,7 +84,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = '' }) => {
                 </Link>
               ))}
               {searchResults.length > 5 && (
-                <div className="px-3 py-2 text-sm text-blue-600 border-t border-gray-100">
+                <div className="px-3 py-2 text-sm text-[#92B9E3] border-t border-gray-100">
                   Và {searchResults.length - 5} kết quả khác...
                 </div>
               )}
