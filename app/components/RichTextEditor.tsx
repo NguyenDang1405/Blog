@@ -16,7 +16,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     <div className="border border-gray-300 rounded-lg overflow-hidden">
       <Editor
         apiKey="qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2"
-        onInit={(evt, editor) => editorRef.current = editor}
+        onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}
         init={{
