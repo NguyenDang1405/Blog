@@ -97,7 +97,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
           statusbar: true,
           resize: 'both',
           image_advtab: true,
-          images_upload_url: '/api/upload',
+          images_upload_url: '/api/cloudinary-upload',
           images_upload_base_path: '/uploads',
           images_upload_credentials: true,
           file_picker_types: 'image',
@@ -113,11 +113,11 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
                   const formData = new FormData()
                   formData.append('file', file)
                   
-                  try {
-                    const response = await fetch('/api/upload', {
-                      method: 'POST',
-                      body: formData
-                    })
+                         try {
+                           const response = await fetch('/api/cloudinary-upload', {
+                             method: 'POST',
+                             body: formData
+                           })
                     
                     const result = await response.json()
                     

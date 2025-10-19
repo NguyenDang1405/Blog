@@ -29,7 +29,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, className = ''
       const formData = new FormData()
       formData.append('file', file)
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/cloudinary-upload', {
         method: 'POST',
         body: formData
       })
