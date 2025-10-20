@@ -17,7 +17,8 @@ export const createUser = mutation({
       .first();
 
     if (existingUser) {
-      throw new Error("Email đã được sử dụng");
+      // Nếu user đã tồn tại, trả về ID hiện tại
+      return existingUser._id;
     }
 
     // Tạo user mới
