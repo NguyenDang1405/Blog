@@ -3,8 +3,8 @@
 
 tinymce.init({
     selector: 'textarea.tiny-mce',
-    // API Key từ TinyMCE Cloud
-    api_key: 'qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2',
+    // Sử dụng no-api-key để tránh lỗi domain
+    api_key: 'no-api-key',
     plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
     toolbar: 'undo redo | blocks | ' +
         'bold italic underline strikethrough | alignleft aligncenter ' +

@@ -10,6 +10,8 @@ import ImageUpload from '../../components/ImageUpload'
 import RelatedLinks from '../../components/RelatedLinks'
 import CategorySelector from '../../components/CategorySelector'
 import TagInput from '../../components/TagInput'
+import ProtectedRoute from '../../components/ProtectedRoute'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function EditPost({ params }: { params: { id: string } }) {
   const [title, setTitle] = useState('')
@@ -26,6 +28,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
   
   const post = useQuery(api.posts.getPostById, { id: params.id as Id<"posts"> })
   const updatePost = useMutation(api.posts.updatePost)
+  const { user } = useAuth()
 
   useEffect(() => {
     if (post) {
@@ -46,11 +49,16 @@ export default function EditPost({ params }: { params: { id: string } }) {
     setLoading(true)
 
     try {
+      if (!user) {
+        throw new Error('Bạn cần đăng nhập để chỉnh sửa bài viết')
+      }
+
       await updatePost({
         id: params.id as Id<"posts">,
         title,
         content,
         author,
+        userId: user._id, // Truyền userId để kiểm tra quyền
         featuredImage,
         category: category || undefined,
         tags: tags.length > 0 ? tags : undefined,
@@ -89,8 +97,33 @@ export default function EditPost({ params }: { params: { id: string } }) {
     )
   }
 
+  // Kiểm tra quyền sở hữu (chỉ nếu bài viết có userId)
+  if (post && user && post.userId && post.userId !== user._id) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-gradient-to-r from-red-500 to-pink-600 px-8 py-6">
+              <h1 className="text-3xl font-bold text-white mb-2">Không có quyền</h1>
+              <p className="text-red-100">Bạn không có quyền chỉnh sửa bài viết này</p>
+            </div>
+            <div className="p-8 text-center">
+              <button
+                onClick={() => router.push('/')}
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200"
+              >
+                Quay về trang chủ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
@@ -262,5 +295,6 @@ export default function EditPost({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   )
 }

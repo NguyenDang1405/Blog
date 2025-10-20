@@ -81,6 +81,7 @@ export const createPost = mutation({
     title: v.string(),
     content: v.string(),
     author: v.string(),
+    userId: v.id("users"), // ID của user tạo bài viết
     featuredImage: v.optional(v.string()),
     category: v.optional(v.string()),
     tags: v.optional(v.array(v.string())),
@@ -97,6 +98,7 @@ export const createPost = mutation({
       title: args.title,
       content: args.content,
       author: args.author,
+      userId: args.userId, // Lưu userId
       featuredImage: args.featuredImage,
       category: args.category,
       tags: args.tags,
@@ -118,6 +120,7 @@ export const updatePost = mutation({
     title: v.string(),
     content: v.string(),
     author: v.string(),
+    userId: v.optional(v.id("users")), // ID của user cập nhật (optional)
     featuredImage: v.optional(v.string()),
     category: v.optional(v.string()),
     tags: v.optional(v.array(v.string())),
@@ -130,6 +133,18 @@ export const updatePost = mutation({
     }))),
   },
   handler: async (ctx, args) => {
+    // Kiểm tra quyền sở hữu (chỉ nếu có userId)
+    if (args.userId) {
+      const post = await ctx.db.get(args.id);
+      if (!post) {
+        throw new Error("Bài viết không tồn tại");
+      }
+      
+      if (post.userId && post.userId !== args.userId) {
+        throw new Error("Bạn không có quyền chỉnh sửa bài viết này");
+      }
+    }
+
     await ctx.db.patch(args.id, {
       title: args.title,
       content: args.content,
@@ -147,8 +162,48 @@ export const updatePost = mutation({
 
 // Xóa bài viết
 export const deletePost = mutation({
-  args: { id: v.id("posts") },
+  args: { 
+    id: v.id("posts"),
+    userId: v.optional(v.id("users")) // ID của user xóa bài viết (optional)
+  },
   handler: async (ctx, args) => {
+    // Kiểm tra quyền sở hữu (chỉ nếu có userId)
+    if (args.userId) {
+      const post = await ctx.db.get(args.id);
+      if (!post) {
+        throw new Error("Bài viết không tồn tại");
+      }
+      
+      if (post.userId && post.userId !== args.userId) {
+        throw new Error("Bạn không có quyền xóa bài viết này");
+      }
+    }
+
     await ctx.db.delete(args.id);
+  },
+});
+
+// Lấy bài viết của user
+export const getPostsByUser = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("posts")
+      .withIndex("by_user_id", (q) => q.eq("userId", args.userId))
+      .order("desc")
+      .collect();
+  },
+});
+
+// Kiểm tra quyền sở hữu bài viết
+export const checkPostOwnership = query({
+  args: { 
+    postId: v.id("posts"),
+    userId: v.id("users")
+  },
+  handler: async (ctx, args) => {
+    const post = await ctx.db.get(args.postId);
+    if (!post) return false;
+    return post.userId === args.userId;
   },
 });

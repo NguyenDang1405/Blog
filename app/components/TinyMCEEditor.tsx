@@ -16,7 +16,7 @@ export default function TinyMCEEditor({ value, onChange, placeholder }: TinyMCEE
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
       <Editor
-        apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY || "qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2"}
+        apiKey="no-api-key"
         onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}

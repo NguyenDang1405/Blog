@@ -9,6 +9,8 @@ import ImageUpload from '../components/ImageUpload'
 import RelatedLinks from '../components/RelatedLinks'
 import CategorySelector from '../components/CategorySelector'
 import TagInput from '../components/TagInput'
+import ProtectedRoute from '../components/ProtectedRoute'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function CreatePost() {
   const [title, setTitle] = useState('')
@@ -23,16 +25,29 @@ export default function CreatePost() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const createPost = useMutation(api.posts.createPost)
+  const { user } = useAuth()
+
+  // Set author từ user hiện tại
+  useState(() => {
+    if (user) {
+      setAuthor(user.name)
+    }
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
       try {
+        if (!user) {
+          throw new Error('Bạn cần đăng nhập để tạo bài viết')
+        }
+
         await createPost({
           title,
           content,
           author,
+          userId: user._id, // Truyền userId
           featuredImage,
           category: category || undefined,
           tags: tags.length > 0 ? tags : undefined,
@@ -50,7 +65,8 @@ export default function CreatePost() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
@@ -222,5 +238,6 @@ export default function CreatePost() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   )
 }
