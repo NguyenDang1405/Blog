@@ -5,6 +5,7 @@ import { api } from '../../../convex/_generated/api'
 import { Id } from '../../../convex/_generated/dataModel'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import ContentRenderer from '../../components/ContentRenderer'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -14,6 +15,7 @@ export default function PostDetail({ params }: { params: { id: string } }) {
   const deletePost = useMutation(api.posts.deletePost)
   const { user } = useAuth()
   const [isDeleting, setIsDeleting] = useState(false)
+  const router = useRouter()
 
   // Tăng view count khi component mount
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function PostDetail({ params }: { params: { id: string } }) {
   }, [post, incrementViewCount])
 
   const handleDelete = async () => {
-    if (!user) return
+    if (!user || !post) return
     
     if (!confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
       return
