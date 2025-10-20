@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useQuery, useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { Id } from '../../../convex/_generated/dataModel'
-import SimpleRichEditor from '../../components/SimpleRichEditor'
+import TinyMCEEditor from '../../components/TinyMCEEditor'
 import ImageUpload from '../../components/ImageUpload'
 import RelatedLinks from '../../components/RelatedLinks'
 import CategorySelector from '../../components/CategorySelector'
@@ -164,7 +164,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
                 <label htmlFor="content" className="block text-sm font-semibold text-gray-700 mb-3">
                   Nội dung bài viết *
                 </label>
-                <SimpleRichEditor
+                <TinyMCEEditor
                   value={content}
                   onChange={setContent}
                   placeholder="Chỉnh sửa nội dung bài viết của bạn... Bạn có thể sử dụng các công cụ định dạng để tạo nội dung phong phú."

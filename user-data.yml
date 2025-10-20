@@ -1,0 +1,87 @@
+#cloud-config
+
+# Update system
+package_update: true
+package_upgrade: true
+
+# Install Docker
+packages:
+  - docker.io
+  - docker-compose
+  - nginx
+  - curl
+  - git
+
+# Enable Docker service
+runcmd:
+  - systemctl enable docker
+  - systemctl start docker
+  - usermod -aG docker ubuntu
+
+# Create application directory
+  - mkdir -p /opt/blog-backend
+  - cd /opt/blog-backend
+
+# Clone repository (thay thế bằng repo thực tế)
+  - git clone https://github.com/NguyenDang1405/Blog.git .
+
+# Create environment file
+write_files:
+  - path: /opt/blog-backend/.env.production
+    content: |
+      NODE_ENV=production
+      NEXT_PUBLIC_CONVEX_URL=${NEXT_PUBLIC_CONVEX_URL}
+      CONVEX_DEPLOY_KEY=${CONVEX_DEPLOY_KEY}
+      CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+
+# Create nginx config
+  - path: /etc/nginx/sites-available/blog-backend
+    content: |
+      server {
+          listen 80;
+          server_name _;
+          
+          location / {
+              proxy_pass http://localhost:3000;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection 'upgrade';
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_cache_bypass $http_upgrade;
+          }
+      }
+
+# Enable nginx site
+  - ln -sf /etc/nginx/sites-available/blog-backend /etc/nginx/sites-enabled/
+  - rm -f /etc/nginx/sites-enabled/default
+  - systemctl restart nginx
+
+# Start application
+  - cd /opt/blog-backend
+  - docker-compose -f docker-compose.backend.yml up -d
+
+# Create systemd service for auto-start
+  - path: /etc/systemd/system/blog-backend.service
+    content: |
+      [Unit]
+      Description=Blog Backend Service
+      After=docker.service
+      Requires=docker.service
+      
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      WorkingDirectory=/opt/blog-backend
+      ExecStart=/usr/bin/docker-compose -f docker-compose.backend.yml up -d
+      ExecStop=/usr/bin/docker-compose -f docker-compose.backend.yml down
+      
+      [Install]
+      WantedBy=multi-user.target
+
+# Enable service
+  - systemctl enable blog-backend.service

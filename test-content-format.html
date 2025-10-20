@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Content Format - Đã sửa lỗi định dạng</title>
+    <script src="https://cdn.tiny.cloud/1/qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .editor-container {
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .preview-container {
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .buttons {
+            margin: 20px 0;
+            text-align: center;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        
+        /* CSS cho nội dung từ TinyMCE */
+        .rich-content {
+            line-height: 1.7;
+            color: #374151;
+        }
+        .rich-content h1,
+        .rich-content h2,
+        .rich-content h3,
+        .rich-content h4,
+        .rich-content h5,
+        .rich-content h6 {
+            color: #1f2937;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .rich-content h1 {
+            font-size: 2.25rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .rich-content h2 {
+            font-size: 1.875rem;
+        }
+        .rich-content h3 {
+            font-size: 1.5rem;
+        }
+        .rich-content h4 {
+            font-size: 1.25rem;
+        }
+        .rich-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        .rich-content strong,
+        .rich-content b {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .rich-content em,
+        .rich-content i {
+            font-style: italic;
+            color: #4b5563;
+        }
+        .rich-content ul,
+        .rich-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        .rich-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .rich-content blockquote {
+            border-left: 4px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            font-style: italic;
+            color: #4b5563;
+        }
+        .rich-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+        }
+        .rich-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        .rich-content th,
+        .rich-content td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        .rich-content th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+        .rich-content tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        .rich-content code {
+            background-color: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: #dc2626;
+        }
+        .rich-content pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .rich-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        .rich-content a {
+            color: #2563eb;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .rich-content a:hover {
+            color: #1d4ed8;
+            border-bottom-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Content Format - Đã sửa lỗi định dạng</h1>
+        
+        <div class="editor-container">
+            <textarea class="tiny-mce" id="editor">
+                <h2>💡 Điện toán đám mây (Cloud Computing)</h2>
+                <p>không chỉ là một xu hướng, mà đã trở thành nền tảng cốt lõi cho các ứng dụng web hiện đại. Với cloud, nhà phát triển có thể triển khai ứng dụng <strong>nhanh hơn, an toàn hơn</strong>, và <strong>dễ mở rộng hơn</strong> bao giờ hết.</p>
+                
+                <h3>☁️ 1. Cloud Computing là gì?</h3>
+                <p>Điện toán đám mây là mô hình cung cấp tài nguyên máy tính (như máy chủ, cơ sở dữ liệu, bộ nhớ, API…) qua Internet. Thay vì mua, cài đặt và quản lý máy chủ vật lý, bạn <strong>thuê dịch vụ cloud</strong> từ các nhà cung cấp như <strong>AWS, Google Cloud, Azure, Vercel, Convex, Cloudinary…</strong></p>
+                
+                <h3>2. Ba mô hình dịch vụ Cloud cơ bản</h3>
+                <p><strong>Mô hình</strong>:</p>
+                <ul>
+                    <li><strong>Infrastructure as a Service (IaaS)</strong>: Cung cấp máy ảo, mạng, lưu trữ (AWS EC2, OpenStack)</li>
+                    <li><strong>Platform as a Service (PaaS)</strong>: Cung cấp nền tảng triển khai ứng dụng (Vercel, Render)</li>
+                    <li><strong>Software as a Service (SaaS)</strong>: Cung cấp ứng dụng sẵn dùng trên cloud (Google Docs, ChatGPT)</li>
+                </ul>
+                
+                <h3>3. Lợi ích của Cloud</h3>
+                <ul>
+                    <li>🌍 Truy cập mọi nơi, mọi lúc</li>
+                    <li>🚀 Tự động mở rộng (scaling) theo lưu lượng</li>
+                    <li>💾 Bảo mật dữ liệu & sao lưu dễ dàng</li>
+                    <li>🧠 Tích hợp AI và API chỉ với vài dòng code</li>
+                </ul>
+                
+                <blockquote>
+                    <p>Điện toán đám mây không chỉ giúp doanh nghiệp tiết kiệm chi phí mà còn <strong>mở ra thế hệ ứng dụng thông minh, linh hoạt và bền vững hơn.</strong></p>
+                </blockquote>
+            </textarea>
+        </div>
+        
+        <div class="buttons">
+            <button onclick="getContent()">Lấy nội dung</button>
+            <button onclick="setSampleContent()">Đặt nội dung mẫu</button>
+            <button onclick="clearContent()">Xóa nội dung</button>
+        </div>
+        
+        <div class="preview-container">
+            <h3>Preview nội dung (đã sửa lỗi định dạng):</h3>
+            <div id="content-display" class="rich-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Cấu hình TinyMCE
+        tinymce.init({
+            selector: 'textarea.tiny-mce',
+            api_key: 'qado614b80ik6nj27k4wu32te35dp8f24d8gy640mnun5hb2',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic underline strikethrough | alignleft aligncenter ' +
+                'alignright alignjustify | outdent indent | numlist bullist | ' +
+                'forecolor backcolor removeformat | charmap | ' +
+                'fullscreen preview | insertfile image media link anchor | ' +
+                'ltr rtl',
+            height: 500,
+            menubar: false,
+            branding: false,
+            statusbar: true,
+            resize: 'both',
+            image_advtab: true,
+            automatic_uploads: true,
+            file_picker_types: 'image',
+            
+            content_style: `
+                body { 
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+                    font-size: 16px; 
+                    line-height: 1.6;
+                    color: #333;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    color: #2c3e50;
+                    margin-top: 1.5em;
+                    margin-bottom: 0.5em;
+                }
+                p {
+                    margin-bottom: 1em;
+                }
+                blockquote {
+                    border-left: 4px solid #3498db;
+                    padding-left: 1em;
+                    margin: 1em 0;
+                    font-style: italic;
+                    color: #666;
+                }
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin: 1em 0;
+                }
+                table th, table td {
+                    border: 1px solid #ddd;
+                    padding: 8px 12px;
+                    text-align: left;
+                }
+                table th {
+                    background-color: #f8f9fa;
+                    font-weight: bold;
+                }
+                code {
+                    background-color: #f1f3f4;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-family: 'Courier New', monospace;
+                }
+                pre {
+                    background-color: #f8f9fa;
+                    padding: 1em;
+                    border-radius: 8px;
+                    overflow-x: auto;
+                }
+            `,
+            
+            file_picker_callback: (callback, value, meta) => {
+                if (meta.filetype === 'image') {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+
+                    input.onchange = async function() {
+                        const file = this.files?.[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function() {
+                                callback(reader.result, { title: file.name });
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    };
+                    
+                    input.click();
+                }
+            },
+            
+            setup: (editor) => {
+                editor.on('change', () => {
+                    updatePreview();
+                });
+            }
+        });
+
+        // Các hàm tiện ích
+        function getContent() {
+            const content = tinymce.get('editor').getContent();
+            document.getElementById('content-display').innerHTML = content;
+            console.log('Nội dung:', content);
+        }
+
+        function setSampleContent() {
+            const sampleContent = `
+                <h2>💡 Điện toán đám mây (Cloud Computing)</h2>
+                <p>không chỉ là một xu hướng, mà đã trở thành nền tảng cốt lõi cho các ứng dụng web hiện đại. Với cloud, nhà phát triển có thể triển khai ứng dụng <strong>nhanh hơn, an toàn hơn</strong>, và <strong>dễ mở rộng hơn</strong> bao giờ hết.</p>
+                
+                <h3>☁️ 1. Cloud Computing là gì?</h3>
+                <p>Điện toán đám mây là mô hình cung cấp tài nguyên máy tính (như máy chủ, cơ sở dữ liệu, bộ nhớ, API…) qua Internet. Thay vì mua, cài đặt và quản lý máy chủ vật lý, bạn <strong>thuê dịch vụ cloud</strong> từ các nhà cung cấp như <strong>AWS, Google Cloud, Azure, Vercel, Convex, Cloudinary…</strong></p>
+                
+                <h3>2. Ba mô hình dịch vụ Cloud cơ bản</h3>
+                <p><strong>Mô hình</strong>:</p>
+                <ul>
+                    <li><strong>Infrastructure as a Service (IaaS)</strong>: Cung cấp máy ảo, mạng, lưu trữ (AWS EC2, OpenStack)</li>
+                    <li><strong>Platform as a Service (PaaS)</strong>: Cung cấp nền tảng triển khai ứng dụng (Vercel, Render)</li>
+                    <li><strong>Software as a Service (SaaS)</strong>: Cung cấp ứng dụng sẵn dùng trên cloud (Google Docs, ChatGPT)</li>
+                </ul>
+                
+                <h3>3. Lợi ích của Cloud</h3>
+                <ul>
+                    <li>🌍 Truy cập mọi nơi, mọi lúc</li>
+                    <li>🚀 Tự động mở rộng (scaling) theo lưu lượng</li>
+                    <li>💾 Bảo mật dữ liệu & sao lưu dễ dàng</li>
+                    <li>🧠 Tích hợp AI và API chỉ với vài dòng code</li>
+                </ul>
+                
+                <blockquote>
+                    <p>Điện toán đám mây không chỉ giúp doanh nghiệp tiết kiệm chi phí mà còn <strong>mở ra thế hệ ứng dụng thông minh, linh hoạt và bền vững hơn.</strong></p>
+                </blockquote>
+            `;
+            tinymce.get('editor').setContent(sampleContent);
+        }
+
+        function clearContent() {
+            tinymce.get('editor').setContent('');
+        }
+
+        function updatePreview() {
+            const content = tinymce.get('editor').getContent();
+            document.getElementById('content-display').innerHTML = content;
+        }
+
+        // Cập nhật preview khi load trang
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(updatePreview, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import { api } from '../../../convex/_generated/api'
 import { Id } from '../../../convex/_generated/dataModel'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import ContentRenderer from '../../components/ContentRenderer'
 
 export default function PostDetail({ params }: { params: { id: string } }) {
   const post = useQuery(api.posts.getPostById, { id: params.id as Id<"posts"> })
@@ -105,10 +106,7 @@ export default function PostDetail({ params }: { params: { id: string } }) {
 
           {/* Content */}
           <div className="px-8 py-12">
-            <div 
-              className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-img:rounded-xl prose-img:shadow-lg"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            <ContentRenderer content={post.content} />
           </div>
 
           {/* Related Links */}
