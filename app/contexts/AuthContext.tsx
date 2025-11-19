@@ -19,7 +19,8 @@ interface User {
 interface AuthContextType {
   user: User | null
   isLoading: boolean
-  login: (email: string, name: string) => Promise<void>
+  login: (email: string, password: string) => Promise<void>
+  register: (email: string, name: string, password: string) => Promise<void>
   logout: () => void
   updateProfile: (data: { name?: string; avatar?: string }) => Promise<void>
 }
@@ -45,43 +46,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   // Mutations
-  const createUser = useMutation(api.users.createUser)
+  const loginMutation = useMutation(api.users.login)
+  const registerMutation = useMutation(api.users.register)
   const updateUser = useMutation(api.users.updateUser)
-  const updateLastLogin = useMutation(api.users.updateLastLogin)
   const getUserByEmail = useQuery(api.users.getUserByEmail, 
     user ? { email: user.email } : "skip"
   )
 
-  const login = async (email: string, name: string) => {
+  const login = async (email: string, password: string) => {
     try {
       setIsLoading(true)
       
-      // Tạo user mới (hoặc lấy user hiện tại)
-      const userId = await createUser({
+      // Gọi mutation login
+      const userData = await loginMutation({
         email,
-        name,
-        role: 'user'
+        password
       })
-      
-      // Cập nhật last login
-      await updateLastLogin({ id: userId })
+
+      if (!userData) {
+        throw new Error('Đăng nhập thất bại')
+      }
 
       // Lưu vào localStorage
-      const userData = {
-        _id: userId,
+      localStorage.setItem('blog_user', JSON.stringify(userData))
+      setUser(userData as User)
+      
+    } catch (error: any) {
+      console.error('Login error:', error)
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const register = async (email: string, name: string, password: string) => {
+    try {
+      setIsLoading(true)
+      
+      // Gọi mutation register
+      const userId = await registerMutation({
         email,
         name,
-        role: 'user',
-        isActive: true,
-        createdAt: Date.now(),
-        lastLoginAt: Date.now()
+        password
+      })
+
+      // Sau khi đăng ký thành công, tự động đăng nhập
+      const userData = await loginMutation({
+        email,
+        password
+      })
+
+      if (!userData) {
+        throw new Error('Đăng ký thành công nhưng đăng nhập thất bại')
       }
-      
+
+      // Lưu vào localStorage
       localStorage.setItem('blog_user', JSON.stringify(userData))
-      setUser(userData)
+      setUser(userData as User)
       
-    } catch (error) {
-      console.error('Login error:', error)
+    } catch (error: any) {
+      console.error('Register error:', error)
       throw error
     } finally {
       setIsLoading(false)
@@ -117,6 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     isLoading,
     login,
+    register,
     logout,
     updateProfile
   }

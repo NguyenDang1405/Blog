@@ -10,6 +10,9 @@
 
 import type * as categories from "../categories.js";
 import type * as client from "../client.js";
+import type * as comments from "../comments.js";
+import type * as destinations from "../destinations.js";
+import type * as newsletter from "../newsletter.js";
 import type * as posts from "../posts.js";
 import type * as users from "../users.js";
 
@@ -30,6 +33,9 @@ import type {
 declare const fullApi: ApiFromModules<{
   categories: typeof categories;
   client: typeof client;
+  comments: typeof comments;
+  destinations: typeof destinations;
+  newsletter: typeof newsletter;
   posts: typeof posts;
   users: typeof users;
 }>;

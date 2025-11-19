@@ -10,6 +10,8 @@ import ImageUpload from '../../components/ImageUpload'
 import RelatedLinks from '../../components/RelatedLinks'
 import CategorySelector from '../../components/CategorySelector'
 import TagInput from '../../components/TagInput'
+import DestinationSelector from '../../components/DestinationSelector'
+import Gallery from '../../components/Gallery'
 import ProtectedRoute from '../../components/ProtectedRoute'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -23,10 +25,23 @@ export default function EditPost({ params }: { params: { id: string } }) {
   const [isFeatured, setIsFeatured] = useState(false)
   const [isPublished, setIsPublished] = useState(true)
   const [relatedLinks, setRelatedLinks] = useState<Array<{title: string, url: string, description?: string}>>([])
+  // SEO fields
+  const [seoTitle, setSeoTitle] = useState('')
+  const [seoDescription, setSeoDescription] = useState('')
+  const [seoKeywords, setSeoKeywords] = useState<string[]>([])
+  const [seoKeywordInput, setSeoKeywordInput] = useState('')
+  // Scheduled posts
+  const [scheduledAt, setScheduledAt] = useState('')
+  // Phân cấp Điểm đến
+  const [destinationId, setDestinationId] = useState<Id<"destinations"> | undefined>(undefined)
+  // Gallery
+  const [gallery, setGallery] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   
-  const post = useQuery(api.posts.getPostById, { id: params.id as Id<"posts"> })
+  // Lấy id từ params
+  const postId = params.id as Id<"posts">
+  const post = useQuery(api.posts.getPostById, { id: postId })
   const updatePost = useMutation(api.posts.updatePost)
   const { user } = useAuth()
 
@@ -41,6 +56,16 @@ export default function EditPost({ params }: { params: { id: string } }) {
       setIsFeatured(post.isFeatured || false)
       setIsPublished(post.isPublished !== false)
       setRelatedLinks(post.relatedLinks || [])
+      // SEO fields
+      setSeoTitle(post.seoTitle || '')
+      setSeoDescription(post.seoDescription || '')
+      setSeoKeywords(post.seoKeywords || [])
+      // Scheduled posts
+      setScheduledAt(post.scheduledAt ? new Date(post.scheduledAt).toISOString().slice(0, 16) : '')
+      // Phân cấp Điểm đến
+      setDestinationId(post.destinationId)
+      // Gallery
+      setGallery(post.gallery || [])
     }
   }, [post])
 
@@ -54,7 +79,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
       }
 
       await updatePost({
-        id: params.id as Id<"posts">,
+        id: postId,
         title,
         content,
         author,
@@ -64,7 +89,17 @@ export default function EditPost({ params }: { params: { id: string } }) {
         tags: tags.length > 0 ? tags : undefined,
         isFeatured,
         isPublished,
-        relatedLinks: relatedLinks.length > 0 ? relatedLinks : undefined
+        relatedLinks: relatedLinks.length > 0 ? relatedLinks : undefined,
+        // SEO fields
+        seoTitle: seoTitle || undefined,
+        seoDescription: seoDescription || undefined,
+        seoKeywords: seoKeywords.length > 0 ? seoKeywords : undefined,
+        // Scheduled posts
+        scheduledAt: scheduledAt ? new Date(scheduledAt).getTime() : undefined,
+        // Phân cấp Điểm đến
+        destinationId: destinationId,
+        // Gallery
+        gallery: gallery.length > 0 ? gallery : undefined,
       })
       router.push('/')
     } catch (error) {
@@ -257,6 +292,142 @@ export default function EditPost({ params }: { params: { id: string } }) {
                   links={relatedLinks}
                   onChange={setRelatedLinks}
                 />
+              </div>
+
+              {/* Phân cấp Điểm đến */}
+              <div>
+                <DestinationSelector
+                  selectedDestinationId={destinationId}
+                  onDestinationChange={setDestinationId}
+                />
+              </div>
+
+              {/* Gallery */}
+              <div>
+                <Gallery
+                  images={gallery}
+                  onChange={setGallery}
+                />
+              </div>
+
+              {/* SEO Section */}
+              <div className="border-t border-gray-200 pt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Tối ưu SEO</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="seoTitle" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Tiêu đề SEO (tùy chọn)
+                    </label>
+                    <input
+                      type="text"
+                      id="seoTitle"
+                      value={seoTitle}
+                      onChange={(e) => setSeoTitle(e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                      placeholder="Tiêu đề tối ưu cho Google (nếu để trống sẽ dùng tiêu đề bài viết)"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Độ dài khuyến nghị: 50-60 ký tự
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="seoDescription" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Mô tả SEO (tùy chọn)
+                    </label>
+                    <textarea
+                      id="seoDescription"
+                      value={seoDescription}
+                      onChange={(e) => setSeoDescription(e.target.value)}
+                      rows={3}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                      placeholder="Mô tả ngắn gọn về nội dung bài viết (nếu để trống sẽ tự động tạo từ nội dung)"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Độ dài khuyến nghị: 150-160 ký tự
+                    </p>
+                  </div>
+
+                  <div>
+                    <label htmlFor="seoKeywords" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Từ khóa SEO (tùy chọn)
+                    </label>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {seoKeywords.map((keyword, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-orange-100 text-orange-800"
+                        >
+                          {keyword}
+                          <button
+                            type="button"
+                            onClick={() => setSeoKeywords(seoKeywords.filter((_, i) => i !== index))}
+                            className="ml-2 text-orange-600 hover:text-orange-800"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        id="seoKeywords"
+                        value={seoKeywordInput}
+                        onChange={(e) => setSeoKeywordInput(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            if (seoKeywordInput.trim() && !seoKeywords.includes(seoKeywordInput.trim())) {
+                              setSeoKeywords([...seoKeywords, seoKeywordInput.trim()])
+                              setSeoKeywordInput('')
+                            }
+                          }
+                        }}
+                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Nhập từ khóa và nhấn Enter"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (seoKeywordInput.trim() && !seoKeywords.includes(seoKeywordInput.trim())) {
+                            setSeoKeywords([...seoKeywords, seoKeywordInput.trim()])
+                            setSeoKeywordInput('')
+                          }
+                        }}
+                        className="px-4 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
+                      >
+                        Thêm
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Scheduled Posts Section */}
+              <div className="border-t border-gray-200 pt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Lên lịch bài viết</h3>
+                <div>
+                  <label htmlFor="scheduledAt" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Lên lịch xuất bản (tùy chọn)
+                  </label>
+                  <input
+                    type="datetime-local"
+                    id="scheduledAt"
+                    value={scheduledAt}
+                    onChange={(e) => setScheduledAt(e.target.value)}
+                    min={new Date().toISOString().slice(0, 16)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Nếu chọn, bài viết sẽ tự động xuất bản vào thời gian đã chọn
+                  </p>
+                  {scheduledAt && (
+                    <p className="text-sm text-orange-600 mt-2">
+                      Bài viết sẽ được xuất bản vào: {new Date(scheduledAt).toLocaleString('vi-VN')}
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">

@@ -13,10 +13,12 @@ interface RichTextEditorProps {
 export default function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
   const editorRef = useRef<any>(null)
 
+  const apiKey = process.env.NEXT_PUBLIC_TINYMCE_API_KEY || 'no-api-key'
+
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
       <Editor
-        apiKey="no-api-key"
+        apiKey={apiKey}
         onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}

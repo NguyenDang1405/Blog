@@ -7,10 +7,15 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ContentRenderer from '../../components/ContentRenderer'
+import Comments from '../../components/Comments'
+import SocialShare from '../../components/SocialShare'
+import GalleryViewer from '../../components/GalleryViewer'
 import { useAuth } from '../../contexts/AuthContext'
 
 export default function PostDetail({ params }: { params: { id: string } }) {
-  const post = useQuery(api.posts.getPostById, { id: params.id as Id<"posts"> })
+  // Lấy id từ params
+  const postId = params.id as Id<"posts">
+  const post = useQuery(api.posts.getPostById, { id: postId })
   const incrementViewCount = useMutation(api.posts.incrementViewCount)
   const deletePost = useMutation(api.posts.deletePost)
   const { user } = useAuth()
@@ -135,6 +140,21 @@ export default function PostDetail({ params }: { params: { id: string } }) {
           {/* Content */}
           <div className="px-8 py-12">
             <ContentRenderer content={post.content} />
+            
+            {/* Gallery */}
+            {post.gallery && post.gallery.length > 0 && (
+              <GalleryViewer images={post.gallery} />
+            )}
+            
+            {/* Social Share */}
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <SocialShare
+                url={typeof window !== 'undefined' ? window.location.href : ''}
+                title={post.title}
+                description={post.seoDescription || post.content.replace(/<[^>]*>/g, '').substring(0, 160)}
+                image={post.featuredImage}
+              />
+            </div>
           </div>
 
           {/* Related Links */}
@@ -189,6 +209,11 @@ export default function PostDetail({ params }: { params: { id: string } }) {
               </div>
             </div>
           )}
+
+          {/* Comments Section */}
+          <div className="px-8 py-12">
+            <Comments postId={post._id} />
+          </div>
 
           {/* Footer */}
           <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">

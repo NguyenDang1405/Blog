@@ -1,14 +1,20 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
-// Lấy tất cả bài viết
+// Lấy tất cả bài viết (chỉ lấy bài đã publish và không có scheduled hoặc đã đến lịch)
 export const getAllPosts = query({
   handler: async (ctx) => {
-    return await ctx.db
+    const now = Date.now();
+    const allPosts = await ctx.db
       .query("posts")
       .filter((q) => q.eq(q.field("isPublished"), true))
       .order("desc")
       .collect();
+    
+    // Lọc bài viết: chỉ lấy bài không có scheduledAt hoặc scheduledAt đã qua
+    return allPosts.filter(post => 
+      !post.scheduledAt || post.scheduledAt <= now
+    );
   },
 });
 
@@ -92,8 +98,22 @@ export const createPost = mutation({
       url: v.string(),
       description: v.optional(v.string())
     }))),
+    // SEO fields
+    seoTitle: v.optional(v.string()),
+    seoDescription: v.optional(v.string()),
+    seoKeywords: v.optional(v.array(v.string())),
+    // Scheduled posts
+    scheduledAt: v.optional(v.number()),
+    // Phân cấp Điểm đến
+    destinationId: v.optional(v.id("destinations")),
+    // Gallery
+    gallery: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
+    const now = Date.now();
+    // Nếu có scheduledAt và chưa đến lịch, set isPublished = false
+    const shouldPublish = !args.scheduledAt || args.scheduledAt <= now;
+    
     const postId = await ctx.db.insert("posts", {
       title: args.title,
       content: args.content,
@@ -103,9 +123,15 @@ export const createPost = mutation({
       category: args.category,
       tags: args.tags,
       isFeatured: args.isFeatured || false,
-      isPublished: args.isPublished !== false, // Default to true
+      isPublished: shouldPublish ? (args.isPublished !== false) : false, // Nếu scheduled thì chưa publish
       viewCount: 0,
       relatedLinks: args.relatedLinks,
+      seoTitle: args.seoTitle,
+      seoDescription: args.seoDescription,
+      seoKeywords: args.seoKeywords,
+      scheduledAt: args.scheduledAt,
+      destinationId: args.destinationId,
+      gallery: args.gallery,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -131,6 +157,16 @@ export const updatePost = mutation({
       url: v.string(),
       description: v.optional(v.string())
     }))),
+    // SEO fields
+    seoTitle: v.optional(v.string()),
+    seoDescription: v.optional(v.string()),
+    seoKeywords: v.optional(v.array(v.string())),
+    // Scheduled posts
+    scheduledAt: v.optional(v.number()),
+    // Phân cấp Điểm đến
+    destinationId: v.optional(v.id("destinations")),
+    // Gallery
+    gallery: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
     // Kiểm tra quyền sở hữu (chỉ nếu có userId)
@@ -145,6 +181,13 @@ export const updatePost = mutation({
       }
     }
 
+    const now = Date.now();
+    // Nếu có scheduledAt và chưa đến lịch, set isPublished = false
+    const shouldPublish = !args.scheduledAt || args.scheduledAt <= now;
+    const finalIsPublished = args.isPublished !== undefined 
+      ? (shouldPublish ? args.isPublished : false)
+      : undefined;
+
     await ctx.db.patch(args.id, {
       title: args.title,
       content: args.content,
@@ -153,8 +196,14 @@ export const updatePost = mutation({
       category: args.category,
       tags: args.tags,
       isFeatured: args.isFeatured,
-      isPublished: args.isPublished,
+      isPublished: finalIsPublished,
       relatedLinks: args.relatedLinks,
+      seoTitle: args.seoTitle,
+      seoDescription: args.seoDescription,
+      seoKeywords: args.seoKeywords,
+      scheduledAt: args.scheduledAt,
+      destinationId: args.destinationId,
+      gallery: args.gallery,
       updatedAt: Date.now(),
     });
   },

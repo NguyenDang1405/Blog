@@ -4,13 +4,13 @@ export const tinymceConfig = {
   plugins: [
     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
     'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-    'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    'insertdatetime', 'media', 'table', 'help', 'wordcount', 'youtube'
   ],
   toolbar: 'undo redo | blocks | ' +
     'bold italic underline strikethrough | alignleft aligncenter ' +
     'alignright alignjustify | outdent indent |  numlist bullist | ' +
     'forecolor backcolor removeformat | charmap | ' +
-    'fullscreen preview | insertfile image media link anchor | ' +
+    'fullscreen preview | insertfile image media youtube link anchor | ' +
     'ltr rtl',
   content_style: `
     body { 

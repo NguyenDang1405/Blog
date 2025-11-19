@@ -12,11 +12,19 @@ interface TinyMCEEditorProps {
 
 export default function TinyMCEEditor({ value, onChange, placeholder }: TinyMCEEditorProps) {
   const editorRef = useRef<any>(null)
+  
+  // Lấy API key từ environment variable
+  const apiKey = process.env.NEXT_PUBLIC_TINYMCE_API_KEY || 'no-api-key'
+  
+  // Debug: log API key (chỉ trong development)
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log('TinyMCE API Key loaded:', apiKey ? `${apiKey.substring(0, 15)}...` : 'NOT FOUND')
+  }
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
       <Editor
-        apiKey="no-api-key"
+        apiKey={apiKey}
         onInit={(evt: any, editor: any) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}
